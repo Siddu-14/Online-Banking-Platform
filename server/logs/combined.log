@@ -1,0 +1,12 @@
+2026-02-20 21:06:25 [INFO]: 🏦 Banking Server running on http://localhost:5000
+{
+  "service": "banking-api"
+}
+2026-02-20 21:06:25 [INFO]: 🔒 Security: Helmet ✓ | CSRF ✓ | Rate Limiting ✓
+{
+  "service": "banking-api"
+}
+2026-02-20 21:06:25 [INFO]: 📊 Environment: development
+{
+  "service": "banking-api"
+}
