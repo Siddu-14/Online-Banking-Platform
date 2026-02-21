@@ -13,9 +13,8 @@ const loginLimiter = rateLimit({
         retryAfter: '15 minutes',
     },
     keyGenerator: (req) => {
-        // Rate limit by IP + email combination for targeted protection
-        return `${req.ip}-${req.body?.email || 'unknown'}`;
-    },
+  return req.headers["x-forwarded-for"] || req.socket.remoteAddress || "global";
+}
 });
 
 // General rate limiter for auth endpoints — 20 requests per 15 minutes
