@@ -79,8 +79,6 @@ app.use(notFoundHandler);
 app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  logger.info(`🏦 Banking Server running on http://localhost:${PORT}`);
-  logger.info(`🔒 Security: Helmet ✓ | CSRF ✓ | Rate Limiting ✓`);
-  logger.info(`📊 Environment: ${process.env.NODE_ENV || 'development'}`);
-});
+const serverless = require("serverless-http");
+
+module.exports.handler = serverless(app);
