@@ -8,7 +8,8 @@
     "start": "node src/index.js",
     "db:migrate": "npx prisma migrate dev --name init",
     "db:generate": "npx prisma generate",
-    "db:seed": "node src/seed.js""vercel-build": "npx prisma generate"
+    "db:seed": "node src/seed.js",
+    "vercel-build": "npx prisma generate && npx prisma migrate deploy"
   },
   "dependencies": {
     "@prisma/client": "^5.22.0",
