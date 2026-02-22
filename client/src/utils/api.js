@@ -3,7 +3,7 @@ import { store } from '../store/store';
 import { setCredentials, logout } from '../store/authSlice';
 
 const api = axios.create({
-    baseURL: '/api',
+    baseURL: import.meta.env.VITE_API_URL,
     withCredentials: true,
 });
 
