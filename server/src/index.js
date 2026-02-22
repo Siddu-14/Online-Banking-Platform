@@ -56,21 +56,24 @@ app.get('/api/csrf-token', csrfTokenEndpoint);
 app.use('/api', csrfProtection);
 
 // ─── Health Check ───────────────────────────────────────────────────
-app.get('/api/health', (req, res) => {
-  res.json({
-    status: 'ok',
-    environment: process.env.NODE_ENV || 'development',
-    timestamp: new Date().toISOString(),
-    uptime: `${Math.floor(process.uptime())}s`,
-  });
+app.get('/health', (req, res) => {
+  res.json({ status: "OK" });
+});
+
+res.json({
+  status: 'ok',
+  environment: process.env.NODE_ENV || 'development',
+  timestamp: new Date().toISOString(),
+  uptime: `${Math.floor(process.uptime())}s`,
+});
 });
 
 // ─── Routes ─────────────────────────────────────────────────────────
-app.use('/api/auth', authRoutes);
-app.use('/api/account', accountRoutes);
-app.use('/api/transactions', transactionRoutes);
-app.use('/api/user', userRoutes);
-app.use('/api/ai', aiRoutes);
+app.use('/auth', authRoutes);
+app.use('/account', accountRoutes);
+app.use('/transactions', transactionRoutes);
+app.use('/user', userRoutes);
+app.use('/ai', aiRoutes);
 
 // ─── 404 Handler ────────────────────────────────────────────────────
 app.use(notFoundHandler);
