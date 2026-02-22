@@ -47,13 +47,13 @@ app.use(cookieParser());
 app.use(requestLogger);
 
 // ─── Global Rate Limiter ────────────────────────────────────────────
-app.use('/api', globalLimiter);
+app.use(globalLimiter);
 
 // ─── CSRF Token Endpoint ────────────────────────────────────────────
-app.get('/api/csrf-token', csrfTokenEndpoint);
+app.get('/csrf-token', csrfTokenEndpoint);
 
 // ─── CSRF Protection (applied to POST/PUT/DELETE) ───────────────────
-app.use('/api', csrfProtection);
+app.use(csrfProtection);
 
 // ─── Health Check ───────────────────────────────────────────────────
 // Health Check
