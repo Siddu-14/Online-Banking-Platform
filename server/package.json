@@ -9,7 +9,8 @@
     "db:migrate": "npx prisma migrate dev --name init",
     "db:generate": "npx prisma generate",
     "db:seed": "node src/seed.js",
-    "build": "npx prisma generate && npx prisma migrate deploy"
+    "postinstall": "prisma generate",
+    "build": "echo Build complete"
   },
   "dependencies": {
     "@prisma/client": "^5.22.0",
