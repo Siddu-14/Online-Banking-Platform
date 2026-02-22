@@ -79,6 +79,4 @@ app.use(notFoundHandler);
 app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
-const serverless = require("serverless-http");
-
-module.exports.handler = serverless(app);
+module.exports = app;
