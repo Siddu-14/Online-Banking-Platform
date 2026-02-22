@@ -3,7 +3,7 @@ const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const helmet = require('helmet');
 const { globalLimiter } = require('./middleware/rateLimiter');
-const { csrfTokenEndpoint, csrfProtection } = require('./middleware/csrf');
+// const { csrfTokenEndpoint, csrfProtection } = require('./middleware/csrf');
 const { errorHandler, notFoundHandler, requestLogger } = require('./middleware/errorHandler');
 const logger = require('./config/logger');
 require('dotenv').config();
@@ -48,12 +48,6 @@ app.use(requestLogger);
 
 // ─── Global Rate Limiter ────────────────────────────────────────────
 app.use(globalLimiter);
-
-// ─── CSRF Token Endpoint ────────────────────────────────────────────
-app.get('/csrf-token', csrfTokenEndpoint);
-
-// ─── CSRF Protection (applied to POST/PUT/DELETE) ───────────────────
-app.use(csrfProtection);
 
 // ─── Health Check ───────────────────────────────────────────────────
 // Health Check
