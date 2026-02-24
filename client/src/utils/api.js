@@ -7,22 +7,6 @@ const api = axios.create({
     withCredentials: true,
 });
 
-// ─── CSRF Token Management ──────────────────────────────────────────
-let csrfToken = null;
-
-export async function fetchCsrfToken() {
-    try {
-        const { data } = await axios.get('/api/csrf-token', { withCredentials: true });
-        csrfToken = data.csrfToken;
-        return csrfToken;
-    } catch (err) {
-        console.error('Failed to fetch CSRF token:', err);
-        return null;
-    }
-}
-
-// Fetch CSRF token on module load
-fetchCsrfToken();
 
 // ─── Request Interceptor ────────────────────────────────────────────
 api.interceptors.request.use(
@@ -34,12 +18,7 @@ api.interceptors.request.use(
             config.headers.Authorization = `Bearer ${token}`;
         }
 
-        // Attach CSRF token for state-changing requests
-        if (['post', 'put', 'delete', 'patch'].includes(config.method)) {
-            if (csrfToken) {
-                config.headers['x-csrf-token'] = csrfToken;
-            }
-        }
+
 
         return config;
     },
@@ -67,16 +46,7 @@ api.interceptors.response.use(
         const originalRequest = error.config;
 
         // Handle CSRF token errors — refetch token and retry once
-        if (
-            error.response?.status === 403 &&
-            error.response?.data?.code === 'CSRF_ERROR' &&
-            !originalRequest._csrfRetry
-        ) {
-            originalRequest._csrfRetry = true;
-            await fetchCsrfToken();
-            originalRequest.headers['x-csrf-token'] = csrfToken;
-            return api(originalRequest);
-        }
+
 
         // Handle expired access token — refresh and retry
         if (
@@ -104,7 +74,7 @@ api.interceptors.response.use(
                     {},
                     {
                         withCredentials: true,
-                        headers: csrfToken ? { 'x-csrf-token': csrfToken } : {},
+                        headers: {},
                     }
                 );
                 store.dispatch(setCredentials({ accessToken: data.accessToken }));
